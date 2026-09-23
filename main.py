@@ -1,8 +1,8 @@
 import dns.resolver
 
-domain_list = [
-    'www.google.com', 'www.example.com', 'www.bluewateryachtdetailing.com',
-]
+# Reading a list of specified domains from the file
+with open('domain_list.txt', 'r') as file:
+    domain_list=file.read().strip().split('\n')
 
 # Resolve A records (IPv4 addresses)
 try:
