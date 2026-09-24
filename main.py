@@ -5,12 +5,19 @@ with open('domain_list.txt', 'r') as file:
     domain_list=file.read().strip().split('\n')
 
 # Resolve A records (IPv4 addresses)
-
 for domain in domain_list:
     try:
         result = dns.resolver.resolve(domain, 'A')
         for ip in result:
-            print("IP address:", ip)
+            print("IPv4 address:", ip)
     except Exception as e:
-        print("Failed to resolve:", e)
+        print("Failed to resolve A records:", e)
 
+# Resolve AAAA records (IPv6 addresses)
+for domain in domain_list:
+    try:
+        result = dns.resolver.resolve(domain, 'AAAA')
+        for ip in result:
+            print("IPv6 address:", ip)
+    except Exception as e:
+        print("Failed to resolve AAAA records:", e)
