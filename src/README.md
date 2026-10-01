@@ -6,6 +6,3 @@ This is project is a simple Python script that takes a list of domains and for e
     Outputs a clean health report pass/fair per domain
 
 The script reads the domain_list.txt document but can accept a simple list if needed.
-
-
-The Dockerfile for this script is using lightweight python runtime as a base image
