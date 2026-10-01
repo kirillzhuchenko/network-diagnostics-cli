@@ -1,4 +1,7 @@
 import dns.resolver
+import socket
+
+PORT=443
 
 def domain_list():
 # Reading a list of specified domains from the file
@@ -13,24 +16,22 @@ def a_record():
         try:
             result = dns.resolver.resolve(domain, 'A')
             for ip in result:
-                print("IPv4 address:", ip)
+                print(f"IPv4 address for {domain}:", ip)
         except Exception as e:
             print("Failed to resolve A records:", e)
     return
 
-# Resolve AAAA records (IPv6 addresses)
-def aaaa_record():
+def check_port():
     for domain in domain_list():
         try:
-            result = dns.resolver.resolve(domain, 'AAAA')
-            for ip in result:
-                print("IPv6 address:", ip)
+            sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+            result = sock.connect_ex((domain, PORT))
+            sock.close()
+            if result == 0:
+                    print(f"Port {PORT} on {domain} is OPEN.")
+            else:
+                print(f"Port {PORT} on {domain} is CLOSED (Error code: {result}).")
         except Exception as e:
-            print("Failed to resolve AAAA records:", e)
-    return
-
-record_type=input("Please enter the type of record: A, AAAA, NC, CNAME or ALL:\n")
-if record_type=="A":
-    a_record()
-elif record_type=="AAAA":
-    aaaa_record()
+            print(f"Failed to connect to {domain}:", e)
+a_record()
+check_port()
